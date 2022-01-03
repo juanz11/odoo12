@@ -156,14 +156,27 @@
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
 	        <xpath expr="//page[@name='hr_settings']" position='after'>
-	    	    <page name='Rmedico' string='Información Medica'>
+	    	    <page name='Rmedico' string='Información Médica'>
                    <group name="group_left" > 
                     <group string="Alergias">
                        
-                        <field name="zone6" ></field> <field name="spouse_complete_name" attrs="{'invisible': [('zone6', 'not in', ['Fármacos'])]}" groups="hr.group_hr_user"/> </group>
-                        <separator/>
+                        <field  name="zone6" id="zone6" ></field> 
+                        <field name="alergia" string="Indica la(s) alergia(s) " attrs="{'invisible' : [('zone6', 'not in', ['Da','A','F','As','Pn','Ra','Uc' ,'Dermatitis atópica','Alimentos','Fármacos','Asma alérgico','Poliposis nasal','Rinitis alérgica','Urticaria crónica'])]}" options="{'no_create_edit':True, 'no_create': True, 'no_open':True}"> </field>                    
+                       
+                       
+                       
+                        </group>
+                        <group string="Grupo sanguíneo">
                         <field name="zone7" ></field>
-                   
+                        </group>  
+                      
+                    </group> 
+                    <group name="group_right">
+                        <group string="Vacuna contra covid-19">
+                            <field name="vacuna" string="Se encuentra vacunado?" ></field>
+                        </group> 
+                         
+                        
                     </group>
 	    	    </page>
 	        </xpath>
