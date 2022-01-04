@@ -177,7 +177,7 @@
                            
                             <field name="dosis" string="Nombre de la vacuna:" attrs="{'invisible' : [('vacuna', 'not in', ['S','Si'])]}" />
                             <field name="ndosis" string="Numero de dosis"  attrs="{'invisible' : [('vacuna', 'not in', ['S','Si'])]}"/>
-
+                         
                         </group> 
                          
                         

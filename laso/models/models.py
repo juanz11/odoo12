@@ -81,5 +81,6 @@ class CustomEmploye(models.Model): #
     alergia = fields.Text()
     vacuna = fields.Selection([('S','Si'),('N','No')])
     dosis= fields.Text()
-    ndosis=fields.Selection([('1','1'),('2','2'),('2','2')])
- 
+    ndosis=fields.Selection([('1','1'),('2','2'),('3','3')])
+   
+    
