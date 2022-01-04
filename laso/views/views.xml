@@ -161,7 +161,7 @@
                     <group string="Alergias">
                        
                         <field  name="zone6" id="zone6" ></field> 
-                        <field name="alergia" string="Indica la(s) alergia(s) " attrs="{'invisible' : [('zone6', 'not in', ['Da','A','F','As','Pn','Ra','Uc' ,'Dermatitis atópica','Alimentos','Fármacos','Asma alérgico','Poliposis nasal','Rinitis alérgica','Urticaria crónica'])]}" options="{'no_create_edit':True, 'no_create': True, 'no_open':True}"> </field>                    
+                        <field name="alergia" string="Indica la(s) alergia(s) " attrs="{'invisible' : [('zone6', 'not in', ['Da','A','F','As','Anl','Pn','Ra','Uc','Niq','Sus','Ot'])]}" options="{'no_create_edit':True, 'no_create': True, 'no_open':True}"> </field>                    
                        
                        
                        
@@ -172,8 +172,12 @@
                       
                     </group> 
                     <group name="group_right">
-                        <group string="Vacuna contra covid-19">
-                            <field name="vacuna" string="Se encuentra vacunado?" ></field>
+                        <group string="Vacuna contra covid-19"> <separator/>
+                            <field name="vacuna" string="Se encuentra vacunado" >  </field>
+                           
+                            <field name="dosis" string="Nombre de la vacuna:" attrs="{'invisible' : [('vacuna', 'not in', ['S','Si'])]}" />
+                            <field name="ndosis" string="Numero de dosis"  attrs="{'invisible' : [('vacuna', 'not in', ['S','Si'])]}"/>
+
                         </group> 
                          
                         
