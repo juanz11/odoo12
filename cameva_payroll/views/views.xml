@@ -76,6 +76,66 @@
         </xpath>
       </field>
     </record>
+
+
+      <record id="view_hr_employee_form" model="ir.ui.view">
+   	        <field name="name">view.hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+	        <xpath expr="//page[@name='hr_settings']" position='after'>
+	    	    <page name = 'uniformes' string='Uniformes'>
+                   <group name="group_left" > 
+                    <group  string="Tallas de uniforme">
+
+                        <field name="shoes" >  </field>  <button string="load"></button> <separator/>
+                        <field name="zone3" ></field>
+                        <field name="zone4"></field>
+                        <field name="zone5"></field>
+                     </group>
+                    </group>
+	    	    </page>
+	        </xpath>
+            </field>
+        </record>
+
+        <record id="view_hr_employee_form2" model="ir.ui.view">
+   	        <field name="name">view.hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+	        <xpath expr="//page[@name='hr_settings']" position='after'>
+	    	    <page name='Rmedico' string='Información Médica'>
+                   <group name="group_left" > 
+                    <group string="Alergias">
+                       
+                        <field  name="zone6" id="zone6" ></field> 
+                        <field name="alergia" string="Indica la(s) alergia(s) " attrs="{'invisible' : [('zone6', 'not in', ['Da','A','F','As','Anl','Pn','Ra','Uc','Niq','Sus','Ot'])]}" options="{'no_create_edit':True, 'no_create': True, 'no_open':True}"> </field>                    
+                       
+                       
+                       
+                        </group>
+                        <group string="Grupo sanguíneo">
+                        <field name="zone7" ></field>
+                        </group>  
+                      
+                    </group> 
+                    <group name="group_right">
+                        <group string="Vacuna contra covid-19"> <separator/>
+                            <field name="vacuna" string="Se encuentra vacunado" widget="radio">  </field>
+                           
+                            <field name="dosis" string="Nombre de la vacuna:" attrs="{'invisible' : [('vacuna', 'not in', ['S','Si'])]}" />
+                            <field name="ndosis" string="Numero de dosis"  attrs="{'invisible' : [('vacuna', 'not in', ['S','Si'])]}"/>
+                           
+                        </group> 
+                         
+                        
+                    </group>
+	    	    </page>
+	        </xpath>
+            </field>
+        </record>
+
   
   </data>
 </odoo>

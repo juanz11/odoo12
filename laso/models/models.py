@@ -2,6 +2,7 @@
 
 from odoo import models	, fields, api
 import datetime
+import base64
 
 
 class Visit(models.Model):

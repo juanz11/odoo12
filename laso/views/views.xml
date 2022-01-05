@@ -139,7 +139,7 @@
                    <group name="group_left" > 
                     <group  string="Tallas de uniforme">
 
-                        <field name="zone2" ></field>
+                        <field name="zone2" >  </field>  <button string="load"></button> <separator/>
                         <field name="zone3" ></field>
                         <field name="zone4"></field>
                         <field name="zone5"></field>
