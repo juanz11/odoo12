@@ -173,11 +173,11 @@
                     </group> 
                     <group name="group_right">
                         <group string="Vacuna contra covid-19"> <separator/>
-                            <field name="vacuna" string="Se encuentra vacunado" >  </field>
+                            <field name="vacuna" string="Se encuentra vacunado" widget="radio">  </field>
                            
                             <field name="dosis" string="Nombre de la vacuna:" attrs="{'invisible' : [('vacuna', 'not in', ['S','Si'])]}" />
                             <field name="ndosis" string="Numero de dosis"  attrs="{'invisible' : [('vacuna', 'not in', ['S','Si'])]}"/>
-                         
+                           
                         </group> 
                          
                         
