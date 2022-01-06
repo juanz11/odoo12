@@ -27,10 +27,11 @@
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
-        'views/employee_card.xml',
+        'security/ir.model.access.csv',
+        'views/employee_views.xml',
         'views/templates.xml',
-        'views/salary_rule.xml'
+        'views/salary_rule.xml',
+        'views/allergy_views.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

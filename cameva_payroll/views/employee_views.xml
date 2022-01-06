@@ -9,8 +9,8 @@
                 <page name = 'uniformes' string='Uniformes'>
                       <group name="group_left" > 
                         <group  string="Tallas de uniforme">
-
-                            <field name="shoes" >  </field> <separator/>
+                            <field name="uniforms_size"> </field>
+                            <field name="shoes" >  </field> 
                             <field name="zone3" ></field>
                             <field name="zone4"></field>
                             <field name="zone5"></field>
@@ -31,11 +31,11 @@
                       <group name="group_left" > 
                         <group string="Alergias">
                           
-                            <field  name="zone6" id="zone6" ></field> 
+                            <field name="allergy_type"></field> 
                             <field 
                               name="alergia" 
                               string="Indica la(s) alergia(s) " 
-                              attrs="{'invisible' : [('zone6', 'not in', ['Da','A','F','As','Anl','Pn','Ra','Uc','Niq','Sus','Ot'])]}" 
+                              attrs="{'invisible' : [('allergy_type','=','false' )]}" 
                               options="{'no_create_edit':True, 'no_create': True, 'no_open':True}"> 
                             </field>
                         </group>
@@ -47,6 +47,7 @@
                       </group> 
                         <group name="group_right">
                             <group string="Vacuna contra covid-19"> <separator/>
+
                                 <field name="vacuna" string="Se encuentra vacunado" widget="radio">  </field>
                               
                                 <field name="dosis" string="Nombre de la vacuna:" attrs="{'invisible' : [('vacuna', 'not in', ['S','Si'])]}" />

@@ -14,5 +14,27 @@ class CamevaEmploye(models.Model): #
     zone7 = fields.Selection([('O', 'O+'),('ON', 'O-'),('A', 'A-'),('Ap', 'A+'),('Bn', 'B-'),('Bp', 'B+'),('ABn', 'AB-'),('AB', 'AB+')], string='Grupo sanguíneo')
     alergia = fields.Text()
     vacuna = fields.Selection([('S','Si'),('N','No')])
-    dosis= fields.Text()
+    dosis= fields.Char()
     ndosis=fields.Selection([('1','1'),('2','2'),('3','3')])
+
+    allergy_type = fields.Many2one('hr.employee.allergy','Select an allergy type')
+    uniforms_size = fields.Many2one('hr.employee.uniforms','Select an size uniforms')
+
+
+class HrEmployeeAllergy(models.Model):
+    _name = 'hr.employee.allergy'
+    _descriptions = 'Allergies'
+    
+    name = fields.Char(required='true')
+    relation = fields.One2many('hr.employee','allergy_type')
+
+class HrEmployeeUniforms(models.Model):
+    _name = 'hr.employee.uniforms'
+    _descriptions = 'uniforms'
+
+    name = fields.Char(required= 'true')
+    relation = fields.One2many('hr.employee','uniforms_size')
+
+
+
+     

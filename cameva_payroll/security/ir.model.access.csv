@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_cameva_payroll_cameva_payroll,cameva_payroll.cameva_payroll,model_cameva_payroll_cameva_payroll,,1,0,0,0
+access_hr_employee_allergy,cameva_payroll.hr_employee_allergy,model_hr_employee_allergy,,1,1,1,1
+access_hr_employee_uniforms,cameva_payroll.hr_employee_uniforms,model_hr_employee_uniforms,,1,1,1,1
