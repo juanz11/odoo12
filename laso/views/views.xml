@@ -139,7 +139,7 @@
                    <group name="group_left" > 
                     <group  string="Tallas de uniforme">
 
-                        <field name="zone2" >  </field>  <button string="load"></button> <separator/>
+                        <field name="zone2" >  </field>   
                         <field name="zone3" ></field>
                         <field name="zone4"></field>
                         <field name="zone5"></field>
@@ -187,7 +187,6 @@
 
 	    	    </page>
 
-                 <menuitem name="Your Root Menu Name" id="your_root_menu_id"  parent="menu_hr_root"   groups="group_hr_manager" sequence="450"/>
 	        </xpath>
             </field>
         </record>

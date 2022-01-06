@@ -1,10 +1,59 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
-from datetime import date, datetime, time
-from pytz import timezone 
+from odoo.exceptions import UserError
+from odoo.tools.safe_eval import safe_eval 
 
-class CamevaPayroll(models.Model):
+from datetime import date, datetime, time
+from pytz import timezone
+
+
+class SalaryRule(models.Model):
+    _inherit = 'hr.salary.rule'
+    _description = 'Custom Salary Rule: Extending hr.salary.rule'
+
+    #TODO should add some checks on the type of result (should be float)
+    @api.multi
+    def _compute_rule(self, localdict):
+        """
+        :param localdict: dictionary containing the environement in which to compute the rule
+        :return: returns a tuple build as the base/amount computed, the quantity and the rate
+        :rtype: (float, float, float)
+        """
+        self.ensure_one()
+        if self.amount_select == 'fix':
+            try:
+                return self.amount_fix, float(safe_eval(self.quantity, localdict)), 100.0
+            except:
+                raise UserError(('Wrong quantity defined for salary rule %s (%s).') % (self.name, self.code))
+        elif self.amount_select == 'percentage':
+            try:
+                return (float(safe_eval(self.amount_percentage_base, localdict)),
+                        float(safe_eval(self.quantity, localdict)),
+                        self.amount_percentage)
+            except:
+                raise UserError(('Wrong percentage base or quantity defined for salary rule %s (%s).') % (self.name, self.code))
+        else:
+            try:
+                safe_eval(self.amount_python_compute, localdict, mode='exec', nocopy=True)
+                #El resultado del codigo ahora se multiplica por el campo cantidad
+                '''
+                    Pensado para las reglas salariales:
+                        Horas extras diurnas y nocturnas
+                        Dias feriados y descanso trabajados
+                '''
+                localdict['result_qty'] = float(self.quantity)
+                localdict['result'] = float(localdict['result']) * float(self.quantity)
+
+                return (localdict['result'], 
+                        'result_qty' in localdict and localdict['result_qty'] or 1.0, 
+                        'result_rate' in localdict and localdict['result_rate'] or 100.0)
+            except:
+                raise UserError(('Wrong python code defined for salary rule %s (%s).') % (self.name, self.code))
+
+
+
+class Payslip(models.Model):
     _inherit = 'hr.payslip'
     _descrption = 'Cameva Payroll module: Extending HRPayslip odoo model'
 
@@ -56,7 +105,18 @@ class CamevaPayroll(models.Model):
                 'contract_id': contract.id,
             }
 
-            # compute attendance days
+            # compute contract worked days
+            work_data = contract.employee_id.get_work_days_data(day_from, day_to, calendar=contract.resource_calendar_id)
+            contract_days = {
+                'name': ("Normal Working Days paid at 100%"),
+                'sequence': 1,
+                'code': 'WORK100',
+                'number_of_days': work_data['days'],
+                'number_of_hours': work_data['hours'],
+                'contract_id': contract.id,
+            }
+
+            # computando dias de asistencia
             work_data = {
                 'attendance': contract.employee_id.attendance_ids,
                 'days': 0.0,
@@ -64,12 +124,11 @@ class CamevaPayroll(models.Model):
             }
             
             for att in work_data['attendance']:
-                check_in_date = att.check_in.date()
-                if (self.date_from <= check_in_date <= self.date_to):
+                if self.date_from <= att.check_in.date() <= self.date_to:
                     work_data['hours'] += att.worked_hours
-                    work_data['days'] = work_data['hours'] / 8  
+                    work_data['days'] = work_data['hours'] / 8 
 
-            _attendances = {
+            attendances = {
                 'name': ("Attendance"),
                 'sequence': 3,
                 'code': 'ATTENDANCE',
@@ -78,10 +137,9 @@ class CamevaPayroll(models.Model):
                 'contract_id': contract.id,
             }
 
+            res.append(contract_days)
             res.append(attendances)
-            res.append(_attendances)
             res.extend(leaves.values())
-            
         return res
 
 
@@ -101,17 +159,6 @@ class CamevaPayroll(models.Model):
             leaves.values() expande todos los objetos de leaves
         '''
 
-class CamevaEmploye(models.Model): #
 
-    _inherit = 'hr.employee' # nos permite modificar el modelo que vamos a especificar
-    
-    shoes = fields.Selection([('34', '34'), ('35', '35'), ('36', '36'),('37', '37'),('38', '38'),('39', '39'),('40', '40'),('41', '41'),('42', '42'),('43', '43'),('44', '44'),('45', '45'),('46', '46')], string='Zapatos')
-    zone3 = fields.Selection([('26', '26'),('28', '28'),('30', '30'),('32', '32'),('34', '34'),('36', '36'),('38', '38'),('40', '40')], string='Pantalon')
-    zone4 = fields.Selection([('X', 'XS'), ('S', 'S'), ('M', 'M'),('L', 'L'),('XL', 'XL'),('XXL', 'XXL')], string='Camisa')
-    zone5 = fields.Selection([('X', 'XS'), ('S', 'S'), ('M', 'M'),('L', 'L'),('XL', 'XL'),('XXL', 'XXL')], string='Chemise') 
-    zone6 = fields.Selection([('A','Alimentos'),('F','Fármacos'),('As','Asma alérgico'),('Anl','Animales'),('Da','Dermatitis atópica'),('Pn','Poliposis nasal'),('Ra','Rinitis alérgica'),('Uc','Urticaria'),('Niq','Níquel'),('Sus','Sustancias'),('Ot','Otras'),('Ni','Ninguna')], string='Tipo de alergia')
-    zone7 = fields.Selection([('O', 'O+'),('ON', 'O-'),('A', 'A-'),('Ap', 'A+'),('Bn', 'B-'),('Bp', 'B+'),('ABn', 'AB-'),('AB', 'AB+')], string='Grupo sanguíneo')
-    alergia = fields.Text()
-    vacuna = fields.Selection([('S','Si'),('N','No')])
-    dosis= fields.Text()
-    ndosis=fields.Selection([('1','1'),('2','2'),('3','3')])
+
+
