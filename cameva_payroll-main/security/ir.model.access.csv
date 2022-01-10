@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_employee_allergy,cameva_payroll.hr_employee_allergy,model_hr_employee_allergy,,1,1,1,1
+access_hr_supermarket,cameva_payroll.hr_supermarket,model_hr_supermarket,,1,1,1,1

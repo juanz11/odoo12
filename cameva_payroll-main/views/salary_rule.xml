@@ -1,0 +1,17 @@
+<odoo>
+    <data> <!--X
+        <record model="ir.ui.view" id="cameva_payroll.quantity">
+            <field name="name">Enabling quantity for python code</field>
+            <field name="model">hr.salary.rule</field>
+            <field name="inherit_id" ref="hr_payroll.hr_salary_rule_form"/>
+            <field name="arch" type="xml">
+              <xpath expr="//field[@name='quantity']" position="replace">
+                <field 
+                name="quantity" 
+                attrs="{'invisible':[], 'required':[('amount_select','!=','')]}"
+                />
+              </xpath>
+            </field>
+        </record> -->
+    </data>
+</odoo>
