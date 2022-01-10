@@ -12,7 +12,7 @@
                             <field name="uniforms_size" >  </field> 
                             <field name="pants_size" ></field>
                             <field string="Camisa" name="shirt_size"></field>
-                            <field string="Chemise" name="shirt_size"></field>
+                            <field string="Chemise" name="chemise_size"></field>
                         </group>
                         </group>
                 </page>
@@ -47,11 +47,11 @@
                         <group name="group_right">
                             <group string="Vacuna contra covid-19"> <separator/>
                                  <field name="sale_ok"/>
-                                  <filter string="Se encuentra vacunado" name="filter_to_sell" domain="[('sale_ok','=',True)]"/>
+                                 
 
-                                  <field name="dosis" string="Nombre de la vacuna:" attrs="{'invisible':[('sale_ok','=',False)]}" />
+                                  <field name="vaccine_type" attrs="{'invisible':[('sale_ok','=',False)]}" />
                                   <field name="ndosis" string="Numero de dosis"  attrs="{'invisible':[('sale_ok','=',False)]}"/>
-                              
+
                             </group>  
                         </group>
                 </page>

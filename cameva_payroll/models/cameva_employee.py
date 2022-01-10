@@ -25,7 +25,10 @@ class CamevaEmploye(models.Model): #
     uniforms_size = fields.Many2one('hr.employee.uniforms','Zapatos')
     pants_size = fields.Many2one('hr.employee.pants', 'Pantalon')
     shirt_size = fields.Many2one('hr.employee.shirt')
+    chemise_size = fields.Many2one('hr.employee.chemise')
     blood_type = fields.Many2one('hr.employee.blood', 'Tipo de sangre')
+    vaccine_type = fields.Many2one('hr.employee.vaccine', 'Especificar vacuna:')
+  
     
 
 class HrEmployeeAllergy(models.Model):
@@ -56,6 +59,13 @@ class HrEmployeeShirt(models.Model):
     name = fields.Char(required= 'true')
     relation = fields.One2many('hr.employee','shirt_size')
 
+class HrEmployeeChemise(models.Model):
+    _name = 'hr.employee.chemise'
+    _descriptions = 'chemise'
+
+    name = fields.Char(required= 'true')
+    relation = fields.One2many('hr.employee','chemise_size')
+
 class HrEmployeeTypeBlood(models.Model):
     _name = 'hr.employee.blood'
     _descriptions = 'blood'
@@ -63,4 +73,9 @@ class HrEmployeeTypeBlood(models.Model):
     name = fields.Char(required= 'true')
     relation = fields.One2many('hr.employee','blood_type')
 
-     
+class HrEmployeeTypeVaccine(models.Model):
+    _name = 'hr.employee.vaccine'
+    _descriptions = 'vaccine'
+
+    name = fields.Char(required= 'true')
+    relation = fields.One2many('hr.employee','vaccine_type')     

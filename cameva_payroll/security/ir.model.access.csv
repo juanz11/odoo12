@@ -4,4 +4,6 @@ access_hr_employee_uniforms,cameva_payroll.hr_employee_uniforms,model_hr_employe
 access_hr_employee_pants,cameva_payroll.hr_employee_pants,model_hr_employee_pants,,1,1,1,1
 access_hr_employee_shirt,cameva_payroll.hr_employee_shirt,model_hr_employee_shirt,,1,1,1,1
 access_hr_employee_blood,cameva_payroll.hr_employee_blood,model_hr_employee_blood,,1,1,1,1
+access_hr_employee_vaccine,cameva_payroll.hr_employee_vaccine,model_hr_employee_vaccine,,1,1,1,1
+access_hr_employee_chemise,cameva_payroll.hr_employee_chemise,model_hr_employee_chemise,,1,1,1,1
 
