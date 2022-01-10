@@ -11,8 +11,8 @@
                         <group  string="Tallas de uniformes">
                             <field name="uniforms_size" >  </field> 
                             <field name="pants_size" ></field>
-                            <field name="zone4"></field>
-                            <field name="zone5"></field>
+                            <field string="Camisa" name="shirt_size"></field>
+                            <field string="Chemise" name="shirt_size"></field>
                         </group>
                         </group>
                 </page>
@@ -40,7 +40,7 @@
                         </group>
                         
                         <group string="Grupo sanguíneo">
-                          <field name="zone7" ></field>
+                          <field name="blood_type" ></field>
                         </group>  
                           
                       </group> 

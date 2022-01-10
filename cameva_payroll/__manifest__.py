@@ -32,8 +32,10 @@
         'views/templates.xml',
         'views/salary_rule.xml',
         'views/allergy_views.xml',
+        'views/blood_views.xml',
         'views/uniforms_views.xml',
-        'views/pants_views.xml'
+        'views/pants_views.xml',
+        'views/shirt_views.xml'
     ],
     # only loaded in demonstration mode
     'demo': [

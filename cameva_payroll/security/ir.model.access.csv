@@ -2,4 +2,6 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_hr_employee_allergy,cameva_payroll.hr_employee_allergy,model_hr_employee_allergy,,1,1,1,1
 access_hr_employee_uniforms,cameva_payroll.hr_employee_uniforms,model_hr_employee_uniforms,,1,1,1,1
 access_hr_employee_pants,cameva_payroll.hr_employee_pants,model_hr_employee_pants,,1,1,1,1
+access_hr_employee_shirt,cameva_payroll.hr_employee_shirt,model_hr_employee_shirt,,1,1,1,1
+access_hr_employee_blood,cameva_payroll.hr_employee_blood,model_hr_employee_blood,,1,1,1,1
 
