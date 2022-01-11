@@ -8,7 +8,6 @@
                     <sheet>
                         <group colspan="2">
                             <field name="name" string="Tipo de alergia" class="w-75"></field>
-                     
                         </group>
                     </sheet>
                 </form>
@@ -21,7 +20,6 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="name" string="Tipo de alergia"></field>
-          
                 </tree>
             </field>
         </record>
