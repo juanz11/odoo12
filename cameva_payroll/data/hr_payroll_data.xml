@@ -56,7 +56,7 @@
             <field name="amount_python_compute">result = contract.wage</field>
         </record>
 
-         <record id="hr_rule_basic" model="hr.salary.rule">
+         <record id="hr_rule_weekly" model="hr.salary.rule">
             <field name="name">Salario semanal</field>
             <field name="sequence" eval="2"/>
             <field name="code">500</field>
@@ -66,7 +66,7 @@
             <field name="amount_python_compute">result =((contract.wage)/30 )*5 </field>
         </record>
 
-         <record id="hr_rule_basic" model="hr.salary.rule">
+         <record id="hr_rule_day" model="hr.salary.rule">
             <field name="name">Salario diario</field>
             <field name="sequence" eval="3"/>
             <field name="code">700</field>
@@ -76,14 +76,30 @@
             <field name="amount_python_compute">result =((contract.wage)/30 ) </field>
         </record>
 
-        <record id="hr_rule_basic" model="hr.salary.rule">
+        <record id="hr_rule_weekly_ASG" model="hr.salary.rule">
             <field name="name">Salario semanal asignado</field>
-            <field name="sequence" eval="3"/>
-            <field name="code">700</field>
+            <field name="sequence" eval="4"/>
+            <field name="code">900</field>
+            <field name="category_id" ref="hr_payroll.ASG"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute"> dias_asignados = 5  
+                                                if worked_days.LEGAL: 
+                                                dias_asignados = dias_asignados - (worked_days.LEGAL.number_of_days)
+                                                result = (contract.wage/30) * dias_asignados
+
+            
+             </field>
+        </record>
+
+         <record id="hr_rule_basic" model="hr.salary.rule">
+            <field name="name">Feriado trabajado</field>
+            <field name="sequence" eval="5"/>
+            <field name="code">1100</field>
             <field name="category_id" ref="hr_payroll.BASIC"/>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result =((contract.wage)/30 ) </field>
+            <field name="amount_python_compute">result = contract.wage</field>
         </record>
 
 
