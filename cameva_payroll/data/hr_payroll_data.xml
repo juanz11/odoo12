@@ -2,39 +2,6 @@
 <odoo>
     <data noupdate="0">
 
-        
-        <record id="BASIC" model="hr.salary.rule.category">
-            <field name="name">Basico</field>
-            <field name="code">BASIC</field>
-        </record>
-
-
-        <record id="ALW" model="hr.salary.rule.category">
-            <field name="name">Prima</field>
-            <field name="code">ALW</field>
-        </record>
-
-        <record id="GROSS" model="hr.salary.rule.category">
-            <field name="name">Bruto</field>
-            <field name="code">GROSS</field>
-        </record>
-
-        <record id="DED" model="hr.salary.rule.category">
-            <field name="name">Deducción</field>
-            <field name="code">DED</field>
-        </record>
-
-         <record id="NET" model="hr.salary.rule.category">
-            <field name="name">Neto</field>
-            <field name="code">NET</field>
-        </record>
-
-        <record id="COMP" model="hr.salary.rule.category">
-            <field name="name">Contribución compañía</field>
-            <field name="code">COMP</field>
-        </record>
-
-
         <record id="ASG" model="hr.salary.rule.category">
             <field name="name">Asignacion</field>
             <field name="code">ASG</field>
@@ -45,16 +12,7 @@
             <field name="name">Retencion</field>
             <field name="code">RET</field>
         </record>
-
-         <record id="hr_rule_basic" model="hr.salary.rule">
-            <field name="name">Salario básico total</field>
-            <field name="sequence" eval="1"/>
-            <field name="code">BASIC</field>
-            <field name="category_id" ref="hr_payroll.BASIC"/>
-            <field name="condition_select">none</field>
-            <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = contract.wage</field>
-        </record>
+ 
 
          <record id="hr_rule_weekly" model="hr.salary.rule">
             <field name="name">Salario semanal</field>
@@ -80,32 +38,231 @@
             <field name="name">Salario semanal asignado</field>
             <field name="sequence" eval="4"/>
             <field name="code">900</field>
-            <field name="category_id" ref="hr_payroll.ASG"/>
+            <field name="category_id" ref="ASG"/>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute"> dias_asignados = 5  
-                                                if worked_days.LEGAL: 
-                                                dias_asignados = dias_asignados - (worked_days.LEGAL.number_of_days)
-                                                result = (contract.wage/30) * dias_asignados
-
+            <field name="amount_python_compute">    dias_asignados = 5  
+                                                    if worked_days.LEGAL: 
+                                                        dias_asignados = dias_asignados - (worked_days.LEGAL.number_of_days)
+                                                    result = (contract.wage/30) * dias_asignados
             
              </field>
         </record>
 
-         <record id="hr_rule_basic" model="hr.salary.rule">
+         <record id="hr_rule_holiday" model="hr.salary.rule">
             <field name="name">Feriado trabajado</field>
             <field name="sequence" eval="5"/>
             <field name="code">1100</field>
-            <field name="category_id" ref="hr_payroll.BASIC"/>
+            <field name="category_id" ref="ASG"/>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">salario_diario = contract.wage/30
-                                                result= salario_diario + (salario_diario)*0,5
+            <field name="amount_python_compute">salario_diario = (contract.wage)/30
+                                                result = salario_diario + (salario_diario) * 0.5
+                                                
+            </field>
+        </record>
+
+          <record id="hr_rule_hours_D" model="hr.salary.rule">
+            <field name="name">Horas extras diurnas</field>
+            <field name="sequence" eval="6"/>
+            <field name="code">1300</field>
+            <field name="category_id" ref="ASG"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">salario_diario = (contract.wage/30)
+                                                horas_trabajadas = worked_days.WORK100.number_of_hours                                      
+            </field>
+      
+        </record>
+
+          <record id="hr_rule_extra_hours_N" model="hr.salary.rule">
+            <field name="name">Horas extras nocturnas</field>
+            <field name="sequence" eval="7"/>
+            <field name="code">1400</field>
+            <field name="category_id" ref="ASG"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">salario_diario = (contract.wage / 30)
+                                                horas_trabajadas = worked_days.WORK100.number_of_hours 
+                                                
+            </field>
+
+        </record>
+          <record id="hr_rule_daywork" model="hr.salary.rule">
+            <field name="name">Descanso trabajado</field>
+            <field name="sequence" eval="8"/>
+            <field name="code">1200</field>
+            <field name="category_id" ref="ASG"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">salario_diario = (contract.wage) /30
+                                                result = salario_diario + (salario_diario)*0.5
+                                                
+            </field>
+        </record>
+<!-- 
+         </record>
+          <record id="hr_rule_saturday" model="hr.salary.rule">
+            <field name="name">Sàbado convencional</field>
+            <field name="sequence" eval="9"/>
+            <field name="code">1700</field>
+            <field name="category_id" ref="ASG"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.ASG / 5
+                                               
                                                 
             </field>
         </record>
 
 
+         <record id="hr_rule_sunday" model="hr.salary.rule">
+            <field name="name">Domingo legal</field>
+            <field name="sequence" eval="10"/>
+            <field name="code">1900</field>
+            <field name="category_id" ref="ASG"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.ASG / 5
+                                               
+                                                
+            </field>
+        </record>
+
+-->
+
+         <record id="hr_rule_decs" model="hr.salary.rule">
+            <field name="name">Deducción sin carácter salarial</field>
+            <field name="sequence" eval="11"/>
+            <field name="code">2100</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">fix</field>
+            <field name="amount_percentage">0.0
+                                               
+                                                
+            </field>
+        </record>
+
+       
+         <record id="hr_rule_rep" model="hr.salary.rule">
+            <field name="name">Reposo por enfermedad</field>
+            <field name="sequence" eval="12"/>
+            <field name="code">1500</field>
+            <field name="category_id" ref="ASG"/>
+            <field name="condition_select">python</field>
+             <field name="condition_python">result = worked_days.ENFERMEDAD and worked_days.ENFERMEDAD.number_of_days > 0
+                         </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">dias_de_reposo = worked_days.ENFERMEDAD.number_of_days 
+                                                salario_dia_reposo = (contract.wage / 30) * 0.333
+                                                descuento_dia_reposo = (contract.wage / 30 ) * 0.667
+                                                result = dias_de_reposo * (salario_dia_reposo - descuento_dia_reposo) 
+
+                                               
+                                                
+            </field>
+        </record>
+
+ 
+<!--
+         <record id="hr_rule_ausencias" model="hr.salary.rule">
+            <field name="name">Ausencias</field>
+            <field name="sequence" eval="13"/>
+            <field name="code">2200</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="condition_select">code</field> 
+            <field name="condition_python_compute">
+            result = worked_days.IMPAGADA and worked_days.IMPAGADA.number_of_days > 0
+            </field> 
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">salario_diario = (contract.wage / 30)  
+                                                ausencias = worked_days.IMPAGADA.number_of_days 
+                                                result = -(ausencias * salario_diario)
+                                               
+                                                
+            </field>
+        </record>
+
+
+
+         <record id="hr_rule_rep_laboral" model="hr.salary.rule">
+            <field name="name">Reposo por accidente laboral</field>
+            <field name="sequence" eval="14"/>
+            <field name="code">1600</field>
+            <field name="category_id" ref="hr_payroll.ASG"/>
+            <field name="condition_select">code</field>
+            <field name="condition_python_compute">
+            result = worked_days.LEGAL and worked_days.LEGAL.number_of_days > 0
+            </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">dias_reposo = worked_days.LEGAL.number_of_days
+                                                salario_reposo = (contract.wage / 30)  
+                                                result = dias_reposo * salario_reposo                                 
+                                                
+            </field>
+        </record>
+
+
+         <record id="hr_rule_Regp" model="hr.salary.rule">
+            <field name="name">Régimen prestacional de empleado</field>
+            <field name="sequence" eval="15"/>
+            <field name="code">3100</field>
+            <field name="category_id" ref="hr_payroll.ASG"/>
+            <field name="condition_select">none</field>
+            </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute"> numero_lunes = (worked_days.WORK100.number_of_days / 7) +1
+                                                 result = -((35000000)*12)/30) * 0.005 * (numero_lunes)                 
+                                                
+            </field>
+        </record> 
+       
+        <record id="hr_rule_SSO" model="hr.salary.rule">
+            <field name="name">Seguro Social Obligatorio</field>
+            <field name="sequence" eval="16"/>
+            <field name="code">3200</field>
+            <field name="category_id" ref="hr_payroll.RET"/>
+            <field name="condition_select">none</field>
+            </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute"> numero_lunes = (worked_days.WORK100.number_of_days / 7) +1
+                                                 result = -((35000000)*12)/52) * 0.04 * (numero_lunes)                 
+                                                
+            </field>
+        </record>
+-->
+
+
+         <record id="hr_rule_DSCS" model="hr.salary.rule">
+            <field name="name">Ley de Fondo de Ahorro Obligatorio para la Vivienda (FAOV)</field>
+            <field name="sequence" eval="17"/>
+            <field name="code">3300</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">percentage</field>
+            <field name="amount_percentage_base">categories.ASG </field>
+            <field name="amount_percentage_compute">-1,0000</field>
+        </record>
+ 
+
+      
+  <!--  
+
+         <record id="hr_rule_RPE" model="hr.salary.rule">
+            <field name="name">Régimen prestacional de empleado</field>
+            <field name="sequence" eval="18"/>
+            <field name="code">NETO</field>
+            <field name="category_id" ref="hr_payroll.NET"/>
+            <field name="condition_select">none</field>
+            </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute"> result = categories.ASG + categories.DED  + categories.RET          
+                                                
+            </field>
+        </record>
+
+        -->
 
     </data>
 </odoo>

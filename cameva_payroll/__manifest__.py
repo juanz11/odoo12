@@ -29,11 +29,8 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/employee_views.xml',
-        'views/templates.xml',
-        'views/salary_rule.xml',
-        'views/allergy_views.xml',
-        'views/supermarket_views.xml',
+        'data/hr_payroll_data.xml'
+       
     ],
     # only loaded in demonstration mode
     'demo': [
